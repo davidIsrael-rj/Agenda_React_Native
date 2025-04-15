@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 Icon.loadFont();
 
@@ -19,7 +19,7 @@ export default function AddNome() {
     const [form, setForm] = useState(initialForm)
 
     const addPessoa = ()=>{
-        Alert.alert(`Adicionando pessoas`)
+        Alert.alert(`${form.nome} ,${form.cpf} ,${form.rg},${form.DtNas}, ${form.Tel},${form.rua},${form.bairro},${form.cep}`)
     }
 
     return (
@@ -34,31 +34,47 @@ export default function AddNome() {
                 </View>
                 <Text>Nome</Text>
                 <TextInput 
-                style={styles.input}/>
+                style={styles.input}
+                value={form.nome}
+                onChangeText={(text) => setForm({...form, nome: text})} />
                 <Text>CPF</Text>
-                <TextInput style={styles.input} />
+                <TextInput style={styles.input}
+                 value={form.cpf}
+                 onChangeText={(text) => setForm({...form, cpf: text})} />
                 <Text>RG</Text>
-                <TextInput style={styles.input} />
+                <TextInput style={styles.input}
+                 value={form.rg}
+                 onChangeText={(text) => setForm({...form, rg: text})} />
                 <Text>Data Nascimento</Text>
-                <TextInput style={styles.input} />
+                <TextInput style={styles.input}  
+                value={form.DtNas}
+                onChangeText={(text) => setForm({...form, DtNas: text})} />
                 <Text>Telefone</Text>
-                <TextInput style={styles.input} />
+                <TextInput style={styles.input} 
+                 value={form.Tel}
+                 onChangeText={(text) => setForm({...form, Tel: text})} />
                 <View>
                     <View style={styles.subTituloContainer}>
                         <Text style={styles.SubTituloText}>Endereço</Text>
                     </View>
                     <View>
                         <Text>Rua</Text>
-                        <TextInput style={styles.input} />
+                        <TextInput style={styles.input} 
+                         value={form.rua}
+                         onChangeText={(text) => setForm({...form, rua: text})} />
                     </View>
                     <View>
 
                         <Text>Bairro</Text>
-                        <TextInput style={styles.input} />
+                        <TextInput style={styles.input} 
+                         value={form.bairro}
+                         onChangeText={(text) => setForm({...form, bairro: text})} />
                     </View>
                     <View>
                         <Text>CEP</Text>
-                        <TextInput style={styles.input} />
+                        <TextInput style={styles.input} 
+                         value={form.cep}
+                         onChangeText={(text) => setForm({...form, cep: text})} />
                     </View>
                 </View>
                 <View style={styles.botaoContainer}>
