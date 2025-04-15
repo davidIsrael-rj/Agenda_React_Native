@@ -7,15 +7,15 @@ import AddNome from "../telas/AddNome";
 import Lista from "../telas/Lista";
 
 const Tab = createBottomTabNavigator()
-Icon.loadFont();
 
-export default props => (
+export default function Tabs() {
+return(
   <Tab.Navigator
     screenOptions={({ route }) => ({
       headerShown: true,
       tabBarShowLabel: true,
-      tabBarActiveTintColor: 'green',
-      tabBarInactiveTintColor: 'blue',
+      tabBarActiveTintColor: '#4f4f4f',
+      tabBarInactiveTintColor: '#c0c0c0',
       tabBarStyle: { height: 60, width: '100%' },
       tabBarIcon: ({ focused, color, size }) => {
         switch (route.name){
@@ -39,4 +39,4 @@ export default props => (
     <Tab.Screen name="Adicionar" component={AddNome} options={{ tabBarLabel: 'Adicionar' }} />
     <Tab.Screen name="Lista" component={Lista} options={{ tabBarLabel: 'Lista' }} />
   </Tab.Navigator>
-)
+)}

@@ -1,18 +1,40 @@
-import React from "react";
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import React, { useState } from "react";
+import { Alert, Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 Icon.loadFont();
-export default props => (
-    <ScrollView>
 
-        <View style={styles.container}>
-            <View>
-                <View style={styles.subTituloContainer}>
-                    <Text style={styles.SubTituloText}>Dados</Text>
+const initialForm = {
+    nome: "",
+    cpf: "",
+    rg: "",
+    DtNas: "",
+    Tel: "",
+    rua: "",
+    bairro: "",
+    cep: "",
+}
+
+export default function AddNome() {
+
+    const [form, setForm] = useState(initialForm)
+
+    const addPessoa = ()=>{
+        Alert.alert(`Adicionando pessoas`)
+    }
+
+    return (
+
+        <ScrollView>
+
+            <View style={styles.container}>
+                <View>
+                    <View style={styles.subTituloContainer}>
+                        <Text style={styles.SubTituloText}>Dados</Text>
+                    </View>
                 </View>
-            </View>
                 <Text>Nome</Text>
-                <TextInput style={styles.input} />
+                <TextInput 
+                style={styles.input}/>
                 <Text>CPF</Text>
                 <TextInput style={styles.input} />
                 <Text>RG</Text>
@@ -21,30 +43,37 @@ export default props => (
                 <TextInput style={styles.input} />
                 <Text>Telefone</Text>
                 <TextInput style={styles.input} />
-            <View>
-                <View style={styles.subTituloContainer}>
-                    <Text style={styles.SubTituloText}>Endereço</Text>
-                </View>
                 <View>
-                    <Text>Rua</Text>
-                    <TextInput style={styles.input} />
-                </View>
-                <View>
+                    <View style={styles.subTituloContainer}>
+                        <Text style={styles.SubTituloText}>Endereço</Text>
+                    </View>
+                    <View>
+                        <Text>Rua</Text>
+                        <TextInput style={styles.input} />
+                    </View>
+                    <View>
 
-                    <Text>Bairro</Text>
-                    <TextInput style={styles.input} />
+                        <Text>Bairro</Text>
+                        <TextInput style={styles.input} />
+                    </View>
+                    <View>
+                        <Text>CEP</Text>
+                        <TextInput style={styles.input} />
+                    </View>
                 </View>
-                <View>
-                    <Text>CEP</Text>
-                    <TextInput style={styles.input} />
+                <View style={styles.botaoContainer}>
+                    
+                    <TouchableOpacity 
+                    style={styles.botao}
+                    onPress={addPessoa}>
+                        <Text style={styles.botaoText}>Adicionar</Text>
+                        <Icon name="account-check" size={25} color={"#fff"}/>
+                    </TouchableOpacity>
                 </View>
             </View>
-            <View>
-
-            </View>
-        </View>
-    </ScrollView>
-)
+        </ScrollView>
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -69,5 +98,26 @@ const styles = StyleSheet.create({
     SubTituloText: {
         fontSize: 20,
         fontWeight: "bold"
+    },
+    botaoContainer:{
+        paddingTop: 10,
+        justifyContent: "center",
+        alignItems:"center"
+    },
+    botaoText:{
+        fontSize: 20,
+        fontWeight: "bold",
+        color: "#FFF",
+        paddingRight: 15
+    },
+    botao:{
+        flex:1,
+        flexDirection:"row",
+        backgroundColor: "#000",
+        height: 50,
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 10
     }
 })
