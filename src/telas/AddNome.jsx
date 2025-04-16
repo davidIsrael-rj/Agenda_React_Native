@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { DadosContext } from "../contexts/GlobalState";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 Icon.loadFont();
 
 const initialForm = {
@@ -17,9 +19,23 @@ const initialForm = {
 export default function AddNome() {
 
     const [form, setForm] = useState(initialForm)
+    const [transacao, setTransacao] = useContext(DadosContext)
 
-    const addPessoa = ()=>{
-        Alert.alert(`${form.nome} ,${form.cpf} ,${form.rg},${form.DtNas}, ${form.Tel},${form.rua},${form.bairro},${form.cep}`)
+    const setAsyncStorage = async (data) =>{
+        try{
+            await AsyncStorage.setItem("transacao", JSON.stringify(data))
+        }catch(e){
+            console.log(e)
+        }
+    }
+
+    const addPessoa = async ()=>{
+        const newTransacao = {id: transacao.lenght + 1, ...form}
+        const updatedTransacao = [...transacao, newTransacao]
+        setTransacao(updatedTransacao)
+        setForm(initialForm)
+        await setAsyncStorage(updatedTransacao)
+        Alert.alert(`Pessoa foi adicionada com sucesso!`)
     }
 
     return (
