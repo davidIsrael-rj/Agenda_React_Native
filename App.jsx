@@ -4,16 +4,19 @@ import { StyleSheet } from "react-native";
 import 'react-native-gesture-handler';
 import { enableScreens } from "react-native-screens";
 import Tabs from "./src/navegacao/Tabs";
+import GlobalState from "./src/contexts/GlobalState";
 
 enableScreens();
 export default function App() {
   return (
     // <SafeAreaView style={styles.container}>
-    <NavigationContainer>
-      {/* <StatusBar backgroundColor={"#fff"} barStyle="dark-content" /> */}
-      {/* <Text style={styles.textoContainer}>Agenda</Text> */}
-      <Tabs />
-    </NavigationContainer>
+    <GlobalState>
+      <NavigationContainer>
+        {/* <StatusBar backgroundColor={"#fff"} barStyle="dark-content" /> */}
+        {/* <Text style={styles.textoContainer}>Agenda</Text> */}
+        <Tabs />
+      </NavigationContainer>
+    </GlobalState>
     // </SafeAreaView>
   )
 }
