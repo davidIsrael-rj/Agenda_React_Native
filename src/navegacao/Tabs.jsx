@@ -36,7 +36,7 @@ return(
 
   >
 
-    <Tab.Screen name="Adicionar" component={AddNome} options={{ tabBarLabel: 'Adicionar' }} />
     <Tab.Screen name="Lista" component={Lista} options={{ tabBarLabel: 'Lista' }} />
+    <Tab.Screen name="Adicionar" component={AddNome} options={{ tabBarLabel: 'Adicionar' }} />
   </Tab.Navigator>
 )}
