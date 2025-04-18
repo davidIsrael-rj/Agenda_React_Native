@@ -8,9 +8,10 @@ export default function DadosPessoas(props) {
                 <Text style={styles.textNome}>{props.nome}</Text>
             </View>
             <View style={styles.dados}>
+                <Text>ID:{props.id}</Text>
                 <Text>CPF:{props.cpf}, RG:{props.rg}</Text>
-                <Text>Data Nascimento: {props.dtnas}</Text>
-                <Text>Telefone: {props.tel}</Text>
+                <Text>Data Nascimento: {props.DtNas}</Text>
+                <Text>Telefone: {props.Tel}</Text>
                 <Text>Endereço:{props.rua}, {props.bairro}, CEP:{props.cep} </Text>
             </View>
         </View>
