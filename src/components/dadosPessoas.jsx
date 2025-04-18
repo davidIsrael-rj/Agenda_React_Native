@@ -1,19 +1,17 @@
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function DadosPessoas(props) {
     return (
         <View key={props.id} style={styles.container}>
-            <View>
+            <View style={styles.header}>
                 <Text style={styles.textNome}>{props.nome}</Text>
             </View>
-            <View>
-                <Text>{props.cpf}</Text>
-                <Text>{props.rg}</Text>
-                <Text>{props.dtnas}</Text>
-                <Text>{props.tel}</Text>
-                <Text>{props.rua}</Text>
-                <Text>{props.bairro}</Text>
-                <Text>{props.cep}</Text>
+            <View style={styles.dados}>
+                <Text>CPF:{props.cpf}, RG:{props.rg}</Text>
+                <Text>Data Nascimento: {props.dtnas}</Text>
+                <Text>Telefone: {props.tel}</Text>
+                <Text>Endereço:{props.rua}, {props.bairro}, CEP:{props.cep} </Text>
             </View>
         </View>
     )
@@ -21,19 +19,26 @@ export default function DadosPessoas(props) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        paddingHorizontal:15,
+        paddingHorizontal: 15,
         borderColor: "#000",
         borderWidth: 1,
         borderRadius: 8,
-        margin:10,
-        height:0,
+        margin: 10,
+        minHeight: 150,
         width: "100%"
     },
-    textNome:{
+    textNome: {
         fontSize: 25,
-        fontWeight:"bold"
+        fontWeight: "bold"
     },
-    
+    header:{
+        marginBottom: 10,
+        justifyContent: "center",
+        alignItems:"center"
+    },
+    dados:{
+        flex:1,
+    }
+
 
 })
