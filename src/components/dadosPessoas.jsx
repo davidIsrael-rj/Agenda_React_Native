@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         margin: 10,
         minHeight: 150,
-        width: "100%"
     },
     textNome: {
         fontSize: 25,
