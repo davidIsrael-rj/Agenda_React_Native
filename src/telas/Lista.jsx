@@ -10,7 +10,7 @@ export default function Lista() {
                 <FlatList
                     data={transacao}
                     keyExtractor={(_, index)=> String(index)}
-                    renderItem={({ item, index }) => <DadosPessoas {...item} id={parseInt(index + 1)} />}
+                    renderItem={({ item}) => <DadosPessoas {...item}/>}
                     ListEmptyComponent={
                         <Text>Ainda não possui nenhum dados</Text>
                     }

@@ -30,7 +30,8 @@ export default function AddNome() {
     }
 
     const addPessoa = async ()=>{
-        const newTransacao = {id: transacao.lenght + 1, ...form}
+        const id = transacao.length > 0 ? transacao[transacao.length - 1].id + 1 : 1;
+        const newTransacao = {id, ...form}
         const updatedTransacao = [...transacao, newTransacao]
         setTransacao(updatedTransacao)
         setForm(initialForm)
