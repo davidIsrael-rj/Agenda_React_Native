@@ -34,7 +34,7 @@ export default function DadosPessoas(props) {
                 <View style={styles.dados}>
                     <Text>ID:{props.id}</Text>
                     <Text>CPF:{props.cpf}, RG:{props.rg}</Text>
-                    <Text>Data Nascimento: {props.DtNas}</Text>
+                    <Text>Data Nascimento: {new Date(props.DtNas).toLocaleDateString("pt-BR")}</Text>
                     <Text>Telefone: {props.Tel}</Text>
                     <Text>Endereço:{props.rua}, {props.bairro}, CEP:{props.cep} </Text>
                 </View>

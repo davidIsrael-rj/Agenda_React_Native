@@ -1,15 +1,16 @@
 import React, { useContext, useState } from "react";
-import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DadosContext } from "../contexts/GlobalState";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import RNDateTimePicker from "@react-native-community/datetimepicker";
 Icon.loadFont();
 
 const initialForm = {
     nome: "",
     cpf: "",
     rg: "",
-    DtNas: "",
+    DtNas: new Date(),
     Tel: "",
     rua: "",
     bairro: "",
@@ -20,18 +21,26 @@ export default function AddNome() {
 
     const [form, setForm] = useState(initialForm)
     const [transacao, setTransacao] = useContext(DadosContext)
+    const [mostCalend, setMostCalend] = useState(false)
 
-    const setAsyncStorage = async (data) =>{
-        try{
+
+    const insData = (_, selectData) => {
+        setMostCalend(false)
+        if (selectData) {
+            setForm({ ...form, DtNas: selectData })
+        }
+    }
+    const setAsyncStorage = async (data) => {
+        try {
             await AsyncStorage.setItem("transacao", JSON.stringify(data))
-        }catch(e){
+        } catch (e) {
             console.log(e)
         }
     }
 
-    const addPessoa = async ()=>{
+    const addPessoa = async () => {
         const id = transacao.length > 0 ? transacao[transacao.length - 1].id + 1 : 1;
-        const newTransacao = {id, ...form}
+        const newTransacao = { id, ...form }
         const updatedTransacao = [...transacao, newTransacao]
         setTransacao(updatedTransacao)
         setForm(initialForm)
@@ -50,57 +59,74 @@ export default function AddNome() {
                     </View>
                 </View>
                 <Text>Nome</Text>
-                <TextInput 
-                style={styles.input}
-                value={form.nome}
-                onChangeText={(text) => setForm({...form, nome: text})} />
+                <TextInput
+                    style={styles.input}
+                    value={form.nome}
+                    onChangeText={(text) => setForm({ ...form, nome: text })} />
                 <Text>CPF</Text>
                 <TextInput style={styles.input}
-                 value={form.cpf}
-                 onChangeText={(text) => setForm({...form, cpf: text})} />
+                    value={form.cpf}
+                    onChangeText={(text) => setForm({ ...form, cpf: text })} />
                 <Text>RG</Text>
                 <TextInput style={styles.input}
-                 value={form.rg}
-                 onChangeText={(text) => setForm({...form, rg: text})} />
-                <Text>Data Nascimento</Text>
-                <TextInput style={styles.input}  
-                value={form.DtNas}
-                onChangeText={(text) => setForm({...form, DtNas: text})} />
+                    value={form.rg}
+                    onChangeText={(text) => setForm({ ...form, rg: text })} />
+
+                <View>
+                    <Text>Data Nascimento</Text>
+                    <TouchableOpacity onPress={() => setMostCalend(true)}>
+                        <TextInput
+                            style={styles.input}
+                            value={form.DtNas.toLocaleDateString("pt-BR")}
+                            onChangeText={(text) => setForm({ ...form, DtNas: text })} 
+                            editable={false}/>
+                            
+                    </TouchableOpacity>
+                    {mostCalend && (
+                        <RNDateTimePicker
+                            mode="date"
+                            display={Platform.OS === "ios" ? "inline" : "default"}
+                            value={form.DtNas}
+                            onChange={insData}
+                        />
+                    )}
+                </View>
+
                 <Text>Telefone</Text>
-                <TextInput style={styles.input} 
-                 value={form.Tel}
-                 onChangeText={(text) => setForm({...form, Tel: text})} />
+                <TextInput style={styles.input}
+                    value={form.Tel}
+                    onChangeText={(text) => setForm({ ...form, Tel: text })} />
                 <View>
                     <View style={styles.subTituloContainer}>
                         <Text style={styles.SubTituloText}>Endereço</Text>
                     </View>
                     <View>
                         <Text>Rua</Text>
-                        <TextInput style={styles.input} 
-                         value={form.rua}
-                         onChangeText={(text) => setForm({...form, rua: text})} />
+                        <TextInput style={styles.input}
+                            value={form.rua}
+                            onChangeText={(text) => setForm({ ...form, rua: text })} />
                     </View>
                     <View>
 
                         <Text>Bairro</Text>
-                        <TextInput style={styles.input} 
-                         value={form.bairro}
-                         onChangeText={(text) => setForm({...form, bairro: text})} />
+                        <TextInput style={styles.input}
+                            value={form.bairro}
+                            onChangeText={(text) => setForm({ ...form, bairro: text })} />
                     </View>
                     <View>
                         <Text>CEP</Text>
-                        <TextInput style={styles.input} 
-                         value={form.cep}
-                         onChangeText={(text) => setForm({...form, cep: text})} />
+                        <TextInput style={styles.input}
+                            value={form.cep}
+                            onChangeText={(text) => setForm({ ...form, cep: text })} />
                     </View>
                 </View>
                 <View style={styles.botaoContainer}>
-                    
-                    <TouchableOpacity 
-                    style={styles.botao}
-                    onPress={addPessoa}>
+
+                    <TouchableOpacity
+                        style={styles.botao}
+                        onPress={addPessoa}>
                         <Text style={styles.botaoText}>Adicionar</Text>
-                        <Icon name="account-check" size={25} color={"#fff"}/>
+                        <Icon name="account-check" size={25} color={"#fff"} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -132,20 +158,20 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold"
     },
-    botaoContainer:{
+    botaoContainer: {
         paddingTop: 10,
         justifyContent: "center",
-        alignItems:"center"
+        alignItems: "center"
     },
-    botaoText:{
+    botaoText: {
         fontSize: 20,
         fontWeight: "bold",
         color: "#FFF",
         paddingRight: 15
     },
-    botao:{
-        flex:1,
-        flexDirection:"row",
+    botao: {
+        flex: 1,
+        flexDirection: "row",
         backgroundColor: "#000",
         height: 50,
         width: "100%",
