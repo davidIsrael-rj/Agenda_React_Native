@@ -66,9 +66,11 @@ export default function AddNome() {
                 <Text>CPF</Text>
                 <TextInput style={styles.input}
                     value={form.cpf}
+                    keyboardType="decimal-pad"
                     onChangeText={(text) => setForm({ ...form, cpf: text })} />
                 <Text>RG</Text>
                 <TextInput style={styles.input}
+                    keyboardType="decimal-pad"
                     value={form.rg}
                     onChangeText={(text) => setForm({ ...form, rg: text })} />
 
@@ -94,6 +96,7 @@ export default function AddNome() {
 
                 <Text>Telefone</Text>
                 <TextInput style={styles.input}
+                    keyboardType="decimal-pad"
                     value={form.Tel}
                     onChangeText={(text) => setForm({ ...form, Tel: text })} />
                 <View>
@@ -116,6 +119,7 @@ export default function AddNome() {
                     <View>
                         <Text>CEP</Text>
                         <TextInput style={styles.input}
+                            keyboardType="decimal-pad"
                             value={form.cep}
                             onChangeText={(text) => setForm({ ...form, cep: text })} />
                     </View>
