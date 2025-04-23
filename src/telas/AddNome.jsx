@@ -1,12 +1,17 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Alert, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DadosContext } from "../contexts/GlobalState";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
+import { useRoute } from "@react-navigation/native";
+
+
+
 Icon.loadFont();
 
 const initialForm = {
+    // id:0,
     nome: "",
     cpf: "",
     rg: "",
@@ -18,10 +23,17 @@ const initialForm = {
 }
 
 export default function AddNome() {
-
+    
+    const route = useRoute();
     const [form, setForm] = useState(initialForm)
     const [transacao, setTransacao] = useContext(DadosContext)
     const [mostCalend, setMostCalend] = useState(false)
+
+    useEffect(()=>{
+        if (route.params?.pessoa){
+            setForm(route.params.pessoa)
+        }
+    },[route.params])
 
 
     const insData = (_, selectData) => {
@@ -47,6 +59,32 @@ export default function AddNome() {
         await setAsyncStorage(updatedTransacao)
         Alert.alert(`Pessoa foi adicionada com sucesso!`)
     }
+
+    const addPessoaUp = async () => {
+        if (form.id > 0) {
+          // Atualização
+          const updatedTransacao = transacao.map((pessoa) => {
+            if (pessoa.id === form.id) {
+              return form;
+            }
+            return pessoa;
+          });
+          setTransacao(updatedTransacao);
+          await setAsyncStorage(updatedTransacao);
+          Alert.alert(`Pessoa foi atualizada com sucesso!`);
+        } else {
+          // Adição
+          const id = transacao.length > 0 ? transacao[transacao.length - 1].id + 1 : 1;
+          const newTransacao = { id, ...form };
+          const updatedTransacao = [...transacao, newTransacao];
+          setTransacao(updatedTransacao);
+          setForm(initialForm);
+          await setAsyncStorage(updatedTransacao);
+          Alert.alert(`Pessoa foi adicionada com sucesso!`);
+        }
+      };
+      
+      
 
     return (
 
@@ -128,7 +166,7 @@ export default function AddNome() {
 
                     <TouchableOpacity
                         style={styles.botao}
-                        onPress={addPessoa}>
+                        onPress={addPessoaUp}>
                         <Text style={styles.botaoText}>Adicionar</Text>
                         <Icon name="account-check" size={25} color={"#fff"} />
                     </TouchableOpacity>

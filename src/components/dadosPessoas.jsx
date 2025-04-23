@@ -2,31 +2,49 @@ import React, { useContext, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DadosContext } from "../contexts/GlobalState";
+import { useNavigation } from "@react-navigation/native";
+
 
 export default function DadosPessoas(props) {
-
+    
+    const navigation = useNavigation()
     const [transacao, setTransacao] = useContext(DadosContext)
     useEffect(() => {
         console.log("Transacao atualizada:", transacao);
-      }, [transacao]);
-      
+    }, [transacao]);
 
-      const removerPessoa = async (id) => {
+
+    const removerPessoa = async (id) => {
         try {
-          const transacaoStorage = await AsyncStorage.getItem("transacao");
-          const transacaoArray = JSON.parse(transacaoStorage);
-          const novaTransacao = transacaoArray.filter((item) => item.id !== id);
-          setTransacao(novaTransacao);
-          await AsyncStorage.setItem("transacao", JSON.stringify(novaTransacao));
+            const transacaoStorage = await AsyncStorage.getItem("transacao");
+            const transacaoArray = JSON.parse(transacaoStorage);
+            const novaTransacao = transacaoArray.filter((item) => item.id !== id);
+            setTransacao(novaTransacao);
+            await AsyncStorage.setItem("transacao", JSON.stringify(novaTransacao));
         } catch (e) {
-          console.log(e);
+            console.log(e);
         }
-      };
+    };
+
+    const atualizarPessoa = () => {
+        navigation.navigate('Adicionar', {
+            pessoa:{
+                id: props.id,
+                nome: props.nome,
+                cpf: props.cpf,
+                rg: props.rg,
+                DtNas:props.DtNas,
+                Tel: props.Tel,
+                rua: props.rua,
+                bairro: props.bairro,
+                cep: props.cep,
+            }
+        }
+    )}
     return (
         <TouchableOpacity
-            onPress={() => removerPessoa(props.id)}
-        >
-
+            // onPress={() => removerPessoa(props.id)}>
+            onPress={atualizarPessoa}>
             <View key={props.id} style={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.textNome}>{props.nome}</Text>
