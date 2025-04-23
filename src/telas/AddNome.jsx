@@ -71,6 +71,7 @@ export default function AddNome() {
           });
           setTransacao(updatedTransacao);
           await setAsyncStorage(updatedTransacao);
+          setForm(initialForm)
           Alert.alert(`Pessoa foi atualizada com sucesso!`);
         } else {
           // Adição
