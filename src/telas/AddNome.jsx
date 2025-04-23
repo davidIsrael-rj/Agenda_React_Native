@@ -25,13 +25,19 @@ const initialForm = {
 export default function AddNome() {
     
     const route = useRoute();
+
     const [form, setForm] = useState(initialForm)
     const [transacao, setTransacao] = useContext(DadosContext)
     const [mostCalend, setMostCalend] = useState(false)
 
     useEffect(()=>{
         if (route.params?.pessoa){
-            setForm(route.params.pessoa)
+            const pessoa = route.params.pessoa;
+            const dtNas = new Date(pessoa.DtNas)
+            setForm({
+                ...pessoa,
+                DtNas: dtNas
+            })
         }
     },[route.params])
 

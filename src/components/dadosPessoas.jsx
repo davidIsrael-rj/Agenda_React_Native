@@ -9,10 +9,12 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 export default function DadosPessoas(props) {
 
     const navigation = useNavigation()
+
     const [transacao, setTransacao] = useContext(DadosContext)
-    useEffect(() => {
-        console.log("Transacao atualizada:", transacao);
-    }, [transacao]);
+
+    // useEffect(() => {
+    //     console.log("Transacao atualizada:", transacao);
+    // }, [transacao]);
 
 
     const removerPessoa = async (id) => {
@@ -34,7 +36,7 @@ export default function DadosPessoas(props) {
                 nome: props.nome,
                 cpf: props.cpf,
                 rg: props.rg,
-                DtNas: props.DtNas,
+                DtNas: props.DtNas.toISOString(),//convertendo a data para string
                 Tel: props.Tel,
                 rua: props.rua,
                 bairro: props.bairro,
