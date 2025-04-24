@@ -5,7 +5,7 @@ import { DadosContext } from "../contexts/GlobalState";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { useRoute } from "@react-navigation/native";
-
+import { TextInputMask } from "react-native-masked-text";
 
 
 Icon.loadFont();
@@ -23,15 +23,15 @@ const initialForm = {
 }
 
 export default function AddNome() {
-    
+
     const route = useRoute();
 
     const [form, setForm] = useState(initialForm)
     const [transacao, setTransacao] = useContext(DadosContext)
     const [mostCalend, setMostCalend] = useState(false)
 
-    useEffect(()=>{
-        if (route.params?.pessoa){
+    useEffect(() => {
+        if (route.params?.pessoa) {
             const pessoa = route.params.pessoa;
             const dtNas = new Date(pessoa.DtNas)
             setForm({
@@ -39,7 +39,7 @@ export default function AddNome() {
                 DtNas: dtNas
             })
         }
-    },[route.params])
+    }, [route.params])
 
 
     const insData = (_, selectData) => {
@@ -68,30 +68,30 @@ export default function AddNome() {
 
     const addPessoaUp = async () => {
         if (form.id > 0) {
-          // Atualização
-          const updatedTransacao = transacao.map((pessoa) => {
-            if (pessoa.id === form.id) {
-              return form;
-            }
-            return pessoa;
-          });
-          setTransacao(updatedTransacao);
-          await setAsyncStorage(updatedTransacao);
-          setForm(initialForm)
-          Alert.alert(`Pessoa foi atualizada com sucesso!`);
+            // Atualização
+            const updatedTransacao = transacao.map((pessoa) => {
+                if (pessoa.id === form.id) {
+                    return form;
+                }
+                return pessoa;
+            });
+            setTransacao(updatedTransacao);
+            await setAsyncStorage(updatedTransacao);
+            setForm(initialForm)
+            Alert.alert(`Pessoa foi atualizada com sucesso!`);
         } else {
-          // Adição
-          const id = transacao.length > 0 ? transacao[transacao.length - 1].id + 1 : 1;
-          const newTransacao = { id, ...form };
-          const updatedTransacao = [...transacao, newTransacao];
-          setTransacao(updatedTransacao);
-          setForm(initialForm);
-          await setAsyncStorage(updatedTransacao);
-          Alert.alert(`Pessoa foi adicionada com sucesso!`);
+            // Adição
+            const id = transacao.length > 0 ? transacao[transacao.length - 1].id + 1 : 1;
+            const newTransacao = { id, ...form };
+            const updatedTransacao = [...transacao, newTransacao];
+            setTransacao(updatedTransacao);
+            setForm(initialForm);
+            await setAsyncStorage(updatedTransacao);
+            Alert.alert(`Pessoa foi adicionada com sucesso!`);
         }
-      };
-      
-      
+    };
+
+
 
     return (
 
@@ -109,8 +109,9 @@ export default function AddNome() {
                     value={form.nome}
                     onChangeText={(text) => setForm({ ...form, nome: text })} />
                 <Text>CPF</Text>
-                <TextInput style={styles.input}
+                <TextInputMask style={styles.input}
                     value={form.cpf}
+                    type="cpf"
                     keyboardType="decimal-pad"
                     onChangeText={(text) => setForm({ ...form, cpf: text })} />
                 <Text>RG</Text>
@@ -125,9 +126,9 @@ export default function AddNome() {
                         <TextInput
                             style={styles.input}
                             value={form.DtNas.toLocaleDateString("pt-BR")}
-                            onChangeText={(text) => setForm({ ...form, DtNas: text })} 
-                            editable={false}/>
-                            
+                            onChangeText={(text) => setForm({ ...form, DtNas: text })}
+                            editable={false} />
+
                     </TouchableOpacity>
                     {mostCalend && (
                         <RNDateTimePicker
@@ -140,8 +141,14 @@ export default function AddNome() {
                 </View>
 
                 <Text>Telefone</Text>
-                <TextInput style={styles.input}
+                <TextInputMask style={styles.input}
                     keyboardType="decimal-pad"
+                    type="cel-phone"
+                    options={{
+                        maskType: "BRL",
+                        withDDD: true,
+                        addMask: '(99) '
+                    }}
                     value={form.Tel}
                     onChangeText={(text) => setForm({ ...form, Tel: text })} />
                 <View>
@@ -163,10 +170,13 @@ export default function AddNome() {
                     </View>
                     <View>
                         <Text>CEP</Text>
-                        <TextInput style={styles.input}
+                        <TextInputMask
                             keyboardType="decimal-pad"
+                            style={styles.input}
+                            type={'zip-code'}
                             value={form.cep}
-                            onChangeText={(text) => setForm({ ...form, cep: text })} />
+                            onChangeText={(text) => setForm({ ...form, cep: text })}
+                        />
                     </View>
                 </View>
                 <View style={styles.botaoContainer}>
