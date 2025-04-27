@@ -4,8 +4,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DadosContext } from "../contexts/GlobalState";
 import { useNavigation } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Shadow } from "react-native-shadow-2";
-import { Dimensions } from "react-native";
 
 
 export default function DadosPessoas(props) {
@@ -49,21 +47,8 @@ export default function DadosPessoas(props) {
 
     }
 
-    const {width} = Dimensions.get('window')
     return (
-        <Shadow
-            distance={15}     // intensidade da sombra
-            offset={[40, 40]}    // deslocamento da sombra (6 pra direita, 2 pra baixo)
-            startColor={'rgba(0,0,0,0.2)'} // cor da sombra
-            radius={10}        // arredondamento da borda da sombra
-            size={[width * 0.5, 2]} // 👈 largura e altura da sombra menores que o card
-            style={{
-                width: width * 0.98, //  90% da tela
-                alignSelf: 'center', // Centraliza o card
-                marginVertical: 10,  // margem só em cima e embaixo
-            }}
-        >
-
+        <View style={styles.card}>
             <View key={props.id} style={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.textNome}>{props.nome}</Text>
@@ -90,14 +75,14 @@ export default function DadosPessoas(props) {
                     </View>
                 </View>
             </View>
-
-
-        </Shadow>
-
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
+    card: {
+        padding: 1,
+    },
     container: {
         backgroundColor: "#FFF",
         paddingHorizontal: 15,
@@ -106,6 +91,11 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         margin: 10,
         minHeight: 150,
+        shadowColor: '#000000',
+        shadowOffset: { width: 15, height: 15 },
+        shadowOpacity: 1,
+        shadowRadius: 2,
+        elevation: 10,
     },
     textNome: {
         fontSize: 25,
