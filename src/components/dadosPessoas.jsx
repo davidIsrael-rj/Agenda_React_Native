@@ -4,6 +4,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DadosContext } from "../contexts/GlobalState";
 import { useNavigation } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Shadow } from "react-native-shadow-2";
+import { Dimensions } from "react-native";
 
 
 export default function DadosPessoas(props) {
@@ -44,9 +46,24 @@ export default function DadosPessoas(props) {
             }
         }
         )
+
     }
+
+    const {width} = Dimensions.get('window')
     return (
-        
+        <Shadow
+            distance={15}     // intensidade da sombra
+            offset={[40, 40]}    // deslocamento da sombra (6 pra direita, 2 pra baixo)
+            startColor={'rgba(0,0,0,0.2)'} // cor da sombra
+            radius={10}        // arredondamento da borda da sombra
+            size={[width * 0.5, 2]} // 👈 largura e altura da sombra menores que o card
+            style={{
+                width: width * 0.98, //  90% da tela
+                alignSelf: 'center', // Centraliza o card
+                marginVertical: 10,  // margem só em cima e embaixo
+            }}
+        >
+
             <View key={props.id} style={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.textNome}>{props.nome}</Text>
@@ -61,27 +78,32 @@ export default function DadosPessoas(props) {
                     </View>
                     <View styles={styles.containerB}>
                         <TouchableOpacity
-                        onPress={atualizarPessoa}
-                        style={styles.botao}>
+                            onPress={atualizarPessoa}
+                            style={styles.botao}>
                             <Icon name={'account-edit-outline'} size={35} color={"#000"} />
                         </TouchableOpacity>
                         <TouchableOpacity
-                                onPress={() => removerPessoa(props.id)}
+                            onPress={() => removerPessoa(props.id)}
                             style={styles.botao}>
                             <Icon name={"account-minus-outline"} size={35} color={"#000"} />
                         </TouchableOpacity>
                     </View>
                 </View>
             </View>
+
+
+        </Shadow>
+
     )
 }
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: "#FFF",
         paddingHorizontal: 15,
         borderColor: "#000",
         borderWidth: 1,
-        borderRadius: 8,
+        borderRadius: 10,
         margin: 10,
         minHeight: 150,
     },
@@ -106,8 +128,8 @@ const styles = StyleSheet.create({
 
     },
     botao: {
-        height:50,
-        width:50,
+        height: 50,
+        width: 50,
         justifyContent: "center",
         alignItems: "center",
         borderColor: "#000",
