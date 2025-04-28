@@ -65,12 +65,12 @@ export default function DadosPessoas(props) {
                         <TouchableOpacity
                             onPress={atualizarPessoa}
                             style={styles.botao}>
-                            <Icon name={'account-edit-outline'} size={35} color={"#000"} />
+                            <Icon name={'account-edit-outline'} size={35} color={"green"} />
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => removerPessoa(props.id)}
                             style={styles.botao}>
-                            <Icon name={"account-minus-outline"} size={35} color={"#000"} />
+                            <Icon name={"account-minus-outline"} size={35} color={"red"} />
                         </TouchableOpacity>
                     </View>
                 </View>
