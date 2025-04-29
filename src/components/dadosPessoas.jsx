@@ -64,13 +64,13 @@ export default function DadosPessoas(props) {
                     <View styles={styles.containerB}>
                         <TouchableOpacity
                             onPress={atualizarPessoa}
-                            style={styles.botao}>
-                            <Icon name={'account-edit-outline'} size={35} color={"green"} />
+                            style={[styles.botao, {borderColor:"green"}]}>
+                            <Icon name={'account-edit-outline'} size={20} color={"green"} />
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => removerPessoa(props.id)}
-                            style={styles.botao}>
-                            <Icon name={"account-minus-outline"} size={35} color={"red"} />
+                            style={[styles.botao, {borderColor:"red"}]}>
+                            <Icon name={"account-minus-outline"} size={20} color={"red"} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -118,13 +118,13 @@ const styles = StyleSheet.create({
 
     },
     botao: {
-        height: 50,
-        width: 50,
+        height: 40,
+        width: 40,
         justifyContent: "center",
         alignItems: "center",
         borderColor: "#000",
-        borderWidth: 1,
-        borderRadius: 25,
+        borderWidth: 3,
+        borderRadius: 20,
         margin: 10,
 
 
