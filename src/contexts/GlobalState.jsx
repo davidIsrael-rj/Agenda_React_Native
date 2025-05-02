@@ -7,10 +7,9 @@ export default function GlobalState({ children }) {
     const [transacao, setTransacao] = useState([])
 
     useEffect(() => {
-        //AsyncStorage.clear()
         const getAsyncStorage = async () => {
             try {
-                const storedTransacao = AsyncStorage.getItem("transacao")
+                const storedTransacao = await AsyncStorage.getItem("transacao")
                 if (storedTransacao) {
                     setTransacao(JSON.parse(storedTransacao))
                 }
@@ -20,9 +19,20 @@ export default function GlobalState({ children }) {
         }
         getAsyncStorage()
     }, [])
+
+    useEffect(() => {
+        const saveAsyncStorage = async () => {
+            try {
+                await AsyncStorage.setItem("transacao", JSON.stringify(transacao))
+            } catch (e) {
+                console.log(e)
+            }
+        }
+        saveAsyncStorage()
+    }, [transacao])
+
     return (
-        <DadosContext.Provider
-            value={[transacao, setTransacao]}>
+        <DadosContext.Provider value={[transacao, setTransacao]}>
             {children}
         </DadosContext.Provider>
     )
