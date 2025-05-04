@@ -36,7 +36,7 @@ export default function DadosPessoas(props) {
                 nome: props.nome,
                 cpf: props.cpf,
                 rg: props.rg,
-                DtNas: props.DtNas.toISOString(),//convertendo a data para string
+                DtNas: new Date(props.DtNas).toISOString(),//convertendo a data para string
                 Tel: props.Tel,
                 rua: props.rua,
                 bairro: props.bairro,

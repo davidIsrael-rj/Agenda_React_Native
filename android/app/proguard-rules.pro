@@ -8,3 +8,6 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # Add any project specific keep options here:
+# Keep React Native classes
+-keep class com.facebook.react.** { *; }
+-dontwarn com.facebook.react.**
